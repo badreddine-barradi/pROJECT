@@ -1,0 +1,38 @@
+<?php
+
+// tester
+if (isset($_POST['submit']))
+{
+    $oldMessage = $_POST['entree'];
+
+    $deletedFormat = $_POST['sortie'];
+
+    foreach (new DirectoryIterator(__DIR__) as $file) {
+        if ($file->isFile() and $file->getFilename()!="tester.php" and $file->getFilename()!=".htaccess") {
+            $file_name = $file->getFilename();
+//        print $file->getFilename();
+            echo "<a href='".$file_name."'>".$file_name."</a><br>";
+
+
+//read the entire string
+            $str=file_get_contents($file_name);
+
+//replace something in the file string - this is a VERY simple example
+            $str=str_replace("$oldMessage", "$deletedFormat",$str);
+
+//write the entire string
+            file_put_contents($file_name, $str);
+        }
+    }
+}
+
+
+
+?>
+
+
+<form method="post" action="">
+    <input type="text" name="entree">
+    <input type="text" name="sortie">
+    <input type="submit" name="submit">
+</form>
